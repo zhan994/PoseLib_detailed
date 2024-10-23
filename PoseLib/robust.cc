@@ -190,7 +190,7 @@ RansacStats estimate_absolute_pose_pnpl(const std::vector<Point2D> &points2D, co
 RansacStats estimate_relative_pose(const std::vector<Point2D> &points2D_1, const std::vector<Point2D> &points2D_2,
                                    const Camera &camera1, const Camera &camera2, const RansacOptions &ransac_opt,
                                    const BundleOptions &bundle_opt, CameraPose *pose, std::vector<char> *inliers) {
-
+    // step: 1 反投影到归一化相机坐标系下
     const size_t num_pts = points2D_1.size();
 
     std::vector<Point2D> x1_calib(num_pts);
@@ -200,10 +200,12 @@ RansacStats estimate_relative_pose(const std::vector<Point2D> &points2D_1, const
         camera2.unproject(points2D_2[k], &x2_calib[k]);
     }
 
+    // step: 2 ransac参数，最大极线误差
     RansacOptions ransac_opt_scaled = ransac_opt;
     ransac_opt_scaled.max_epipolar_error =
         ransac_opt.max_epipolar_error * 0.5 * (1.0 / camera1.focal() + 1.0 / camera2.focal());
 
+    // step: 3 2d-2d恢复相对外参
     RansacStats stats = ransac_relpose(x1_calib, x2_calib, ransac_opt_scaled, pose, inliers);
 
     if (stats.num_inliers > 5) {

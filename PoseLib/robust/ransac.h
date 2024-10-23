@@ -50,6 +50,7 @@ RansacStats ransac_pnpl(const std::vector<Point2D> &points2D, const std::vector<
                         std::vector<char> *inliers_lines);
 
 // Relative pose estimation
+// api: ransac估计相对位姿态
 RansacStats ransac_relpose(const std::vector<Point2D> &x1, const std::vector<Point2D> &x2, const RansacOptions &opt,
                            CameraPose *best_model, std::vector<char> *best_inliers);
 

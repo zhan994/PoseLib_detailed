@@ -91,11 +91,15 @@ RansacStats ransac_pnpl(const std::vector<Point2D> &points2D, const std::vector<
 
 RansacStats ransac_relpose(const std::vector<Point2D> &x1, const std::vector<Point2D> &x2, const RansacOptions &opt,
                            CameraPose *best_model, std::vector<char> *best_inliers) {
+    // step: 1 初始化参数
     best_model->q << 1.0, 0.0, 0.0, 0.0;
     best_model->t.setZero();
+    
+    // step: 2 ransac估计
     RelativePoseEstimator estimator(opt, x1, x2);
     RansacStats stats = ransac<RelativePoseEstimator>(estimator, opt, best_model);
 
+    // step: 3 计算内点
     get_inliers(*best_model, x1, x2, opt.max_epipolar_error * opt.max_epipolar_error, best_inliers);
 
     return stats;

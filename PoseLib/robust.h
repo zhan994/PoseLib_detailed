@@ -67,6 +67,19 @@ RansacStats estimate_absolute_pose_pnpl(const std::vector<Point2D> &points2D, co
 
 // Estimates relative pose using LO-RANSAC followed by non-linear refinement
 // Threshold for Sampson error is set by RansacOptions.max_epipolar_error
+/**
+ * \brief // api: 估计相对位姿
+ * 
+ * \param points2D_1 特征点1
+ * \param points2D_2 特征点2
+ * \param camera1 相机1
+ * \param camera2 相机2
+ * \param ransac_opt ransac参数
+ * \param bundle_opt ba参数
+ * \param relative_pose 相对位姿态
+ * \param inliers 内点
+ * \return RansacStats 估计的状态 
+ */
 RansacStats estimate_relative_pose(const std::vector<Point2D> &points2D_1, const std::vector<Point2D> &points2D_2,
                                    const Camera &camera1, const Camera &camera2, const RansacOptions &ransac_opt,
                                    const BundleOptions &bundle_opt, CameraPose *relative_pose,

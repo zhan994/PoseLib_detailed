@@ -36,6 +36,7 @@
 namespace poselib {
 
 // Templated LO-RANSAC implementation (inspired by RansacLib from Torsten Sattler)
+// api: LO-RANSAC估计模板
 template <typename Solver, typename Model = CameraPose>
 RansacStats ransac(Solver &estimator, const RansacOptions &opt, Model *best_model) {
     RansacStats stats;

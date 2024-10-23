@@ -35,7 +35,7 @@
 #include "PoseLib/types.h"
 
 namespace poselib {
-
+// api: 相对位姿态估计器类
 class RelativePoseEstimator {
   public:
     RelativePoseEstimator(const RansacOptions &ransac_opt, const std::vector<Point2D> &points2D_1,
